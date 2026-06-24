@@ -46,6 +46,10 @@ export class CPUEngine {
     return JSON.parse(JSON.stringify(this.state));
   }
 
+  public setState(state: CPUState) {
+    this.state = JSON.parse(JSON.stringify(state));
+  }
+
   public setRegisters(regs: Partial<Record<Register, number>>) {
     this.state.registers = { ...this.state.registers, ...regs };
   }

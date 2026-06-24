@@ -5,10 +5,10 @@ import { toSigned16, toHex } from '../../utils/format';
 import { Play } from 'lucide-react';
 
 export function ExecutionTimeline() {
-  const { history, currentStepIndex } = useCPUStore();
+  const { history, currentStepIndex, setStepIndex } = useCPUStore();
 
   const handleJump = (index: number) => {
-    // Jump logic can be added later
+    setStepIndex(index);
   };
 
   return (
@@ -35,10 +35,11 @@ export function ExecutionTimeline() {
         return (
           <div 
             key={index}
-            className={`flex-shrink-0 w-56 rounded-lg border p-3 flex flex-col gap-2 transition-all cursor-default group
+            onClick={() => handleJump(index)}
+            className={`flex-shrink-0 w-56 rounded-lg border p-3 flex flex-col gap-2 transition-all cursor-pointer group
               ${isCurrent 
                 ? 'border-[var(--color-phase-execute)] bg-[var(--color-surface-panel)] shadow-[0_0_15px_rgba(249,115,22,0.2)]' 
-                : 'border-[var(--color-border-subtle)] bg-[var(--color-surface-base)] hover:border-gray-500'
+                : 'border-[var(--color-border-subtle)] bg-[var(--color-surface-base)] hover:border-[var(--color-phase-execute)]'
               }
               ${isPast ? 'opacity-80' : ''}
               ${!isCurrent && !isPast ? 'opacity-30' : ''}

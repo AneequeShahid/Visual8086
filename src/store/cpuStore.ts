@@ -18,6 +18,7 @@ interface CPUStore {
   // Actions
   setSourceCode: (code: string) => void;
   setAnimationSpeed: (speed: number) => void;
+  setStepIndex: (index: number) => void;
   compile: () => void;
   step: () => void;
   stepBack: () => void;
@@ -40,6 +41,13 @@ export const useCPUStore = create<CPUStore>((set, get) => ({
 
   setSourceCode: (code) => set({ sourceCode: code }),
   setAnimationSpeed: (speed) => set({ animationSpeed: speed }),
+  setStepIndex: (index) => {
+    const { history, engine } = get();
+    if (index >= 0 && index < history.length) {
+      engine.setState(history[index].state);
+      set({ currentStepIndex: index });
+    }
+  },
 
   compile: () => {
     const { sourceCode, engine } = get();
@@ -123,12 +131,7 @@ export const useCPUStore = create<CPUStore>((set, get) => ({
     const { currentStepIndex, history, engine } = get();
     if (currentStepIndex > 0) {
       const prevSnapshot = history[currentStepIndex - 1];
-      engine.reset();
-      engine.setRegisters(prevSnapshot.state.registers);
-      // We also need to restore memory and flags in a full implementation
-      // For now, simple object assignment (need to add restoreState to CPUEngine in a robust way)
-      Object.assign(engine.getState(), prevSnapshot.state); 
-      
+      engine.setState(prevSnapshot.state);
       set({ currentStepIndex: currentStepIndex - 1 });
     }
   },
