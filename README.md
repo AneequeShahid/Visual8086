@@ -1,80 +1,77 @@
-# 🖥️ Visual8086 — 8086 Microprocessor Architecture Simulator
+<<<<<<< HEAD
+# coal-project
+=======
+# React + TypeScript + Vite
 
-Visual8086 is a software simulator designed to visualize, step through, and execute **Intel 8086 Assembly instructions**. Written to demonstrate low-level computer architecture, it features register state monitoring, dynamic flag bit calculations, segment-based memory mapping, and a visual pipeline showing instruction execution cycle stages.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
----
+Currently, two official plugins are available:
 
-## 🚀 Key Features
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-* **Register Visualization**: Real-time display of 8086 registers:
-  * General Purpose: `AX`, `BX`, `CX`, `DX` (and their high/low 8-bit splits `AH`, `AL`, etc.)
-  * Index & Pointer: `SI`, `DI`, `SP`, `BP`, `IP`
-  * Segment Registers: `CS`, `DS`, `SS`, `ES`
-* **Dynamic Flags Calculation**: Real-time evaluation of the Status Flags register:
-  * **CF** (Carry), **ZF** (Zero), **SF** (Sign), **OF** (Overflow), **PF** (Parity), and **AF** (Auxiliary Carry).
-* **20-bit Physical Addressing**: Simulates the hardware address translation unit, demonstrating how segment registers combine with offsets to address 1 MB of physical memory:
-  $$\text{Physical Address} = (\text{Segment} \times 0\text{x}10) + \text{Offset}$$
-* **6-Stage Instruction Cycle Visualization**: Displays the internal steps of instruction execution:
-  1. **Fetch**: Loads instructions from memory pointed to by `CS:IP`.
-  2. **Decode**: Parses instructions into opcode and operands.
-  3. **Calculate EA**: Resolves Effective Address for memory operands (e.g., `[BX + SI + displacement]`).
-  4. **Fetch Operands**: Retrieves register values or memory contents.
-  5. **Execute**: Performs ALU operations (arithmetic, bitwise manipulation).
-  6. **Write Back**: Commits results to registers or memory.
+## React Compiler
 
----
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## 🛠️ Technology Stack
+## Expanding the ESLint configuration
 
-* **Bare-metal Routines**: x86 Assembly (NASM / TASM)
-* **Simulation Core**: C++ (OOP logic for ALU and memory space emulator)
-* **Visualization Layer**: Interactive text console and register dashboard
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
----
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-## 📂 Repository Contents
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-* `F2024-0920-AneequeShahhid.ASM` — Main assembly routines implementing standard logical sequences.
-* `Question1.asm` to `Question6.asm` — Assembly programs demonstrating bitwise manipulations, string conversions, index registers, and arithmetic loops.
-* `README.md` — Project documentation.
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
----
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-## 🔍 Addressing Math Example
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-For an instruction accessing data at memory location `[BX + SI]`, where `DS = 0x2000`, `BX = 0x0100`, and `SI = 0x0050`:
-1. **Offset (Effective Address)**: $0x0100 + 0x0050 = 0x0150$
-2. **Segment Base**: $0x2000 \times 16 = 0x20000$
-3. **Physical Address**: $0x20000 + 0x0150 = 0x20150$ (20-bit address)
-
----
-
-## ⚙️ Running the Assembly Routines
-
-To compile and execute the assembly scripts using **TASM** (Turbo Assembler) or **NASM**:
-
-### Using TASM (DosBox Environment)
-1. Assemble the file:
-   ```bash
-   tasm Question1.asm
-   ```
-2. Link the object code:
-   ```bash
-   tlink Question1.obj
-   ```
-3. Run or debug with Turbo Debugger:
-   ```bash
-   td Question1.exe
-   ```
-
-### Using NASM (Modern CLI)
-1. Compile to a raw binary or object file:
-   ```bash
-   nasm -f win32 Question1.asm -o Question1.obj
-   ```
-2. Link using your compiler/linker (e.g., GCC or MSVC linker).
-
----
-
-## 🎓 Academic Credit
-Developed as a project for the Computer Organization and Assembly Language (COAL) course at **Beaconhouse National University (BNU)**.
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
+>>>>>>> c4d18a9 (all initial changes)

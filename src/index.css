@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-teal: #22d3ee;
+  --color-brand-cyan: #06b6d4;
+  --color-brand-amber: #f59e0b;
+  --color-brand-emerald: #10b981;
+  --color-brand-rose: #e11d48;
+  
+  --color-phase-fetch: #3b82f6; /* Electric Blue */
+  --color-phase-decode: #a855f7; /* Purple */
+  --color-phase-execute: #f97316; /* Fiery Orange */
+  --color-phase-writeback: #10b981; /* Emerald Green */
+  --color-phase-error: #e11d48; /* Rose Red */
+  
+  --color-surface-base: #0f1117;
+  --color-surface-raised: #161922;
+  --color-surface-panel: #1c1f2e;
+  
+  --color-border-subtle: #2a2d3e;
+  
+  --font-inter: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+@layer base {
+  :root {
+    --background: var(--color-surface-base);
+    --foreground: #e2e8f0;
+  }
+  
+  html {
+    background-color: var(--color-surface-base);
+  }
+  
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-inter);
+    /* Soft gradient for deep visual hierarchy */
+    background: linear-gradient(135deg, var(--color-surface-base) 0%, var(--color-surface-raised) 100%);
+    min-height: 100vh;
+  }
+}
+
+/* Custom Scrollbar for Bento layout */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface-base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-panel);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-subtle);
+}
+
+/* Utility classes for bento panels */
+@layer utilities {
+  .bento-panel {
+    @apply bg-[var(--color-surface-panel)] border border-[var(--color-border-subtle)] rounded-xl overflow-hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+  }
+  
+  .text-highlight {
+    @apply text-[var(--color-brand-teal)];
+  }
+  
+  .text-changed {
+    @apply text-[var(--color-brand-amber)];
+  }
+  
+  /* Monaco Editor Gutter Indicators */
+  .gutter-indicator {
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 50% !important;
+    background-color: var(--color-border-subtle);
+    margin-left: 10px;
+    margin-top: 8px;
+    box-shadow: 0 0 8px currentColor;
+    transition: all 0.2s ease;
+  }
+  
+  .gutter-indicator.fetch {
+    background-color: var(--color-phase-fetch);
+    color: var(--color-phase-fetch);
+  }
+  .gutter-indicator.decode {
+    background-color: var(--color-phase-decode);
+    color: var(--color-phase-decode);
+  }
+  .gutter-indicator.execute {
+    background-color: var(--color-phase-execute);
+    color: var(--color-phase-execute);
+  }
+  .gutter-indicator.writeback {
+    background-color: var(--color-phase-writeback);
+    color: var(--color-phase-writeback);
+  }
+}
