@@ -1,0 +1,11 @@
+# Assembly build products
+*.obj
+*.exe
+*.map
+*.lst
+
+# System & IDE files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
